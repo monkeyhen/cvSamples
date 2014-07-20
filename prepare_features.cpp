@@ -20,8 +20,8 @@ private:
 	vector<KeyPoint> features;
 
 public:
-	wellFeature(string inputName) {
-		inputfilename = inputName.c_str();
+	wellFeature(char* inputName) {
+		inputfilename = inputName;
 	}
 	Mat detectFeatures();
 
@@ -29,7 +29,9 @@ public:
 
 Mat wellFeature::detectFeatures()
 {
+	initModule_nonfree();
 	Mat img = imread(inputfilename);
+	imshow("test1", img);
 	Ptr<FeatureDetector> mdetector = FeatureDetector::create("HARRIS");
 	vector<KeyPoint> keypoints1;
 	Ptr<DescriptorExtractor> mdescriptor = DescriptorExtractor::create("SIFT");
@@ -44,14 +46,14 @@ Mat wellFeature::detectFeatures()
 	Mat outImg;
 	drawKeypoints(img, keypoints1, outImg, Scalar::all(-1));
 	imshow("sky", outImg);
-	waitKey(1000);
+	waitKey(100000);
 
 	return descriptor1;
 }
 
 int t_main()
 {
-	wellFeature t1("baboon.jpj");
+	wellFeature t1("D:/visual_books/cvsam/cvsam/cpp/baboon.jpg");
 	t1.detectFeatures();
 	return 0;
 }
